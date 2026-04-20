@@ -1,6 +1,6 @@
 // GitHub Releases에서 최신 버전 정보를 가져와 다운로드 링크를 업데이트합니다.
 // REPO를 실제 릴리스 레포지토리로 변경하세요.
-const REPO = 'oryangmc/releases'
+const REPO = 'inter129/oryangmc'
 
 async function fetchLatestRelease() {
   try {
@@ -23,14 +23,16 @@ async function fetchLatestRelease() {
       document.querySelectorAll('a[href*="arm64.dmg"]').forEach(el => {
         el.href = dmg.browser_download_url
         const info = el.nextElementSibling
-        if (info) info.textContent = `${dmg.name} · ${formatBytes(dmg.size)}`
+        const size = formatBytes(dmg.size)
+        if (info && size) info.textContent = `${dmg.name} · ${size}`
       })
     }
     if (exe) {
       document.querySelectorAll('a[href*="setup.exe"]').forEach(el => {
         el.href = exe.browser_download_url
         const info = el.nextElementSibling
-        if (info) info.textContent = `${exe.name} · ${formatBytes(exe.size)}`
+        const size = formatBytes(exe.size)
+        if (info && size) info.textContent = `${exe.name} · ${size}`
       })
     }
   } catch {
@@ -39,6 +41,7 @@ async function fetchLatestRelease() {
 }
 
 function formatBytes(bytes) {
+  if (!bytes || isNaN(bytes)) return null
   return `${Math.round(bytes / 1024 / 1024)} MB`
 }
 
