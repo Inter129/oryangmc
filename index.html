@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>orya.ng MC — 마인크래프트 런처</title>
+  <meta name="description" content="orya.ng 전용 마인크래프트 런처. 간편한 설치로 바로 시작하세요." />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 배경 그리드 -->
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        orya.ng <span class="logo-mc">MC</span>
+      </div>
+      <nav class="nav">
+        <a href="#download">다운로드</a>
+        <a href="#guide">설치 가이드</a>
+        <a href="https://orya.ng" target="_blank" rel="noopener">orya.ng →</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <section class="hero">
+    <div class="hero-badge">v1.0.0 출시</div>
+    <h1 class="hero-title">
+      orya.ng<br />
+      <span class="accent">Minecraft</span> 런처
+    </h1>
+    <p class="hero-desc">
+      orya.ng 계정으로 로그인하고<br />
+      바로 학교 마인크래프트 서버에 접속하세요.
+    </p>
+    <div class="hero-actions">
+      <a href="#download" class="btn-primary">다운로드</a>
+      <a href="#guide" class="btn-secondary">설치 가이드</a>
+    </div>
+
+    <!-- 미리보기 이미지 자리 -->
+    <div class="screenshot-wrap">
+      <div class="screenshot-inner">
+        <img src="screenshot.png" alt="런처 스크린샷" class="screenshot" onerror="this.parentElement.parentElement.style.display='none'" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 특징 -->
+  <section class="features">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3>orya.ng 계정 연동</h3>
+          <p>별도 설치 없이 orya.ng 계정으로 바로 로그인. 학교 인증 시스템과 자동으로 연결됩니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">☕</div>
+          <h3>Java 자동 설치</h3>
+          <p>Java가 없어도 걱정 없습니다. Azul JDK 25가 자동으로 다운로드되어 설치됩니다.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎮</div>
+          <h3>간편한 서버 접속</h3>
+          <p>학교 마인크래프트 서버 목록이 자동으로 동기화됩니다. 클릭 한 번으로 접속하세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 다운로드 -->
+  <section class="download" id="download">
+    <div class="container">
+      <div class="section-label">Download</div>
+      <h2 class="section-title">다운로드</h2>
+      <p class="section-desc">운영체제에 맞는 파일을 선택하세요.</p>
+
+      <div class="download-grid">
+        <div class="download-card">
+          <div class="os-icon">🍎</div>
+          <h3>macOS</h3>
+          <p class="os-desc">Apple Silicon (M1·M2·M3)</p>
+          <a href="https://github.com/oryangmc/releases/releases/latest/download/oryangmc-arm64.dmg"
+             class="btn-download" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            DMG 다운로드
+          </a>
+          <p class="file-info">oryangmc-1.0.0-arm64.dmg · ~92 MB</p>
+        </div>
+
+        <div class="download-card featured">
+          <div class="featured-badge">추천</div>
+          <div class="os-icon">🪟</div>
+          <h3>Windows</h3>
+          <p class="os-desc">Windows 10 / 11 (64-bit)</p>
+          <a href="https://github.com/oryangmc/releases/releases/latest/download/oryangmc-setup.exe"
+             class="btn-download" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            EXE 다운로드
+          </a>
+          <p class="file-info">oryangmc Setup 1.0.0.exe · ~74 MB</p>
+        </div>
+      </div>
+
+      <p class="download-note">
+        ⚠️ macOS: 처음 실행 시 <strong>시스템 설정 → 개인 정보 보호 및 보안</strong>에서 허용이 필요할 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 설치 가이드 -->
+  <section class="guide" id="guide">
+    <div class="container">
+      <div class="section-label">Guide</div>
+      <h2 class="section-title">설치 가이드</h2>
+
+      <div class="guide-cols">
+        <div class="guide-col">
+          <h3>🍎 macOS</h3>
+          <ol class="steps">
+            <li><span class="step-num">1</span> DMG 파일을 다운로드합니다.</li>
+            <li><span class="step-num">2</span> DMG를 열고 <strong>oryangmc.app</strong>을 Applications 폴더로 드래그합니다.</li>
+            <li><span class="step-num">3</span> 처음 실행 시 보안 경고가 나타나면 <strong>시스템 설정 → 개인 정보 보호 및 보안 → 무관하게 열기</strong>를 클릭합니다.</li>
+            <li><span class="step-num">4</span> orya.ng 계정으로 로그인 후 플레이합니다.</li>
+          </ol>
+        </div>
+
+        <div class="guide-col">
+          <h3>🪟 Windows</h3>
+          <ol class="steps">
+            <li><span class="step-num">1</span> EXE 파일을 다운로드합니다.</li>
+            <li><span class="step-num">2</span> 설치 파일을 실행합니다. SmartScreen 경고 시 <strong>추가 정보 → 실행</strong>을 클릭합니다.</li>
+            <li><span class="step-num">3</span> 설치가 완료되면 바탕화면 아이콘을 실행합니다.</li>
+            <li><span class="step-num">4</span> orya.ng 계정으로 로그인 후 플레이합니다.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <span class="logo-dot"></span>
+          orya.ng MC
+        </div>
+        <div class="footer-links">
+          <a href="https://orya.ng" target="_blank" rel="noopener">orya.ng</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2026 orya.ng. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
