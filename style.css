@@ -203,15 +203,28 @@ a { color: inherit; text-decoration: none; }
 .os-desc { font-size: 13px; color: var(--text-s); margin-bottom: 8px; }
 
 .btn-download {
+  position: relative; overflow: hidden;
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--accent); color: #fff;
   font-size: 14px; font-weight: 600;
   padding: 11px 22px; border-radius: 9px;
   width: 100%; justify-content: center;
-  transition: background .15s;
+  transition: background .15s, opacity .15s;
   margin-top: 8px;
+  border: none; cursor: pointer;
 }
-.btn-download:hover { background: #5dc48e; }
+.btn-download:hover:not(:disabled) { background: #5dc48e; }
+.btn-download:disabled { opacity: .75; cursor: default; }
+
+.btn-progress-bar {
+  position: absolute; inset: 0; pointer-events: none;
+  background: transparent;
+}
+.btn-progress {
+  height: 100%; width: 0%;
+  background: rgba(0,0,0,.2);
+  transition: width .3s ease;
+}
 
 .file-info { font-size: 12px; color: var(--text-d); }
 

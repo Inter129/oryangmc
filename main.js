@@ -1,53 +1,80 @@
-// GitHub Releases에서 최신 버전 정보를 가져와 다운로드 링크를 업데이트합니다.
-// REPO를 실제 릴리스 레포지토리로 변경하세요.
-const REPO = 'inter129/oryangmc'
+const BASE = location.origin + location.pathname.replace(/\/?$/, '/') + 'files/'
 
-async function fetchLatestRelease() {
-  try {
-    const res = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`)
-    if (!res.ok) return
-    const data = await res.json()
+// ── 청크 다운로드 & 재조립 ───────────────────────────────────────────────────
 
-    const version = data.tag_name?.replace(/^v/, '') ?? '1.0.0'
+async function downloadChunked(platform) {
+  const res = await fetch(BASE + 'manifest.json')
+  const manifest = await res.json()
+  const info = manifest[platform]
+  if (!info) return
 
-    // 버전 뱃지 업데이트
-    const badge = document.querySelector('.hero-badge')
-    if (badge) badge.textContent = `v${version} 출시`
+  const btn = document.querySelector(`[data-platform="${platform}"]`)
+  const label = btn?.querySelector('.btn-label')
+  const progress = btn?.querySelector('.btn-progress')
 
-    // 에셋에서 DMG / EXE 찾기
-    const assets = data.assets ?? []
-    const dmg = assets.find(a => a.name.endsWith('.dmg'))
-    const exe = assets.find(a => a.name.endsWith('.exe'))
+  const chunks = info.chunks
+  const total = chunks.length
+  const buffers = []
 
-    if (dmg) {
-      document.querySelectorAll('a[href*="arm64.dmg"]').forEach(el => {
-        el.href = dmg.browser_download_url
-        const info = el.nextElementSibling
-        const size = formatBytes(dmg.size)
-        if (info && size) info.textContent = `${dmg.name} · ${size}`
-      })
-    }
-    if (exe) {
-      document.querySelectorAll('a[href*="setup.exe"]').forEach(el => {
-        el.href = exe.browser_download_url
-        const info = el.nextElementSibling
-        const size = formatBytes(exe.size)
-        if (info && size) info.textContent = `${exe.name} · ${size}`
-      })
-    }
-  } catch {
-    // 실패 시 하드코딩된 링크 유지
+  for (let i = 0; i < total; i++) {
+    if (label) label.textContent = `다운로드 중... ${i + 1}/${total}`
+    if (progress) progress.style.width = `${((i) / total) * 100}%`
+
+    const r = await fetch(BASE + chunks[i])
+    if (!r.ok) throw new Error(`청크 다운로드 실패: ${chunks[i]}`)
+    buffers.push(await r.arrayBuffer())
   }
+
+  if (progress) progress.style.width = '100%'
+  if (label) label.textContent = '저장 중...'
+
+  // 재조립
+  const totalBytes = buffers.reduce((s, b) => s + b.byteLength, 0)
+  const merged = new Uint8Array(totalBytes)
+  let offset = 0
+  for (const buf of buffers) {
+    merged.set(new Uint8Array(buf), offset)
+    offset += buf.byteLength
+  }
+
+  // 다운로드 트리거
+  const blob = new Blob([merged])
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = info.filename
+  document.body.appendChild(a)
+  a.click()
+  a.remove()
+  URL.revokeObjectURL(url)
+
+  if (label) label.textContent = platform === 'mac' ? 'DMG 다운로드' : 'EXE 다운로드'
+  if (progress) progress.style.width = '0%'
 }
 
-function formatBytes(bytes) {
-  if (!bytes || isNaN(bytes)) return null
-  return `${Math.round(bytes / 1024 / 1024)} MB`
-}
+// ── 버튼 이벤트 연결 ─────────────────────────────────────────────────────────
 
-// 헤더 스크롤 효과
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-platform]').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault()
+      const platform = btn.getAttribute('data-platform')
+      btn.disabled = true
+      try {
+        await downloadChunked(platform)
+      } catch (err) {
+        const label = btn.querySelector('.btn-label')
+        if (label) label.textContent = '다운로드 실패 — 다시 시도'
+        console.error(err)
+      } finally {
+        btn.disabled = false
+      }
+    })
+  })
+})
+
+// ── 헤더 스크롤 효과 ─────────────────────────────────────────────────────────
+
 window.addEventListener('scroll', () => {
   document.querySelector('.header')?.classList.toggle('scrolled', window.scrollY > 10)
 }, { passive: true })
-
-fetchLatestRelease()
