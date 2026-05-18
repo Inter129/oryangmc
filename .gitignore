@@ -1,0 +1,12 @@
+node_modules/
+dist/
+package-lock.json
+
+# 원본 소스 — 깃허브에 올리지 않음
+*.org.html
+*.org.js
+*.org.css
+
+# 빌드 도구 — 빌드는 로컬에서만 수행
+build.js
+package.json

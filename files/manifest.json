@@ -1,0 +1,10 @@
+{
+  "mac": {
+    "filename": "oryangmc-arm64.dmg",
+    "chunks": ["mac/chunk.aa", "mac/chunk.ab", "mac/chunk.ac", "mac/chunk.ad"]
+  },
+  "win": {
+    "filename": "oryangmc-Setup.exe",
+    "chunks": ["win/chunk.aa", "win/chunk.ab", "win/chunk.ac"]
+  }
+}
